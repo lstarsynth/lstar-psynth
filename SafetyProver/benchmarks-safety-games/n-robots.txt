@@ -1,0 +1,132 @@
+// n robots
+// parameter is amount of robots
+// n robots are in a line and can be moved to the left or to the right
+// environment and system take turns controlling the robot, moving it 0,1 or 2 spaces in one direction
+Initial {
+    init: si;
+
+    si -> s0 S;
+    si -> s0 E;
+    s0 -> s0 3;
+    accepting: s0;
+}    
+
+Transition {
+    init: si;
+
+    si -> ss E/S;
+    si -> ss S/E;
+    
+    ss -> ss 0/0;
+    ss -> ss 1/1;
+    ss -> ss 2/2;
+    ss -> ss 3/3;
+    ss -> ss 4/4;
+    ss -> ss 5/5;
+    ss -> ss 6/6;
+    // move towards the right
+    ss -> sf 0/1;
+    ss -> sf 0/2;
+
+    ss -> sf 1/2;
+    ss -> sf 1/3;
+
+    ss -> sf 2/3;
+    ss -> sf 2/4;
+
+    ss -> sf 3/4;
+    ss -> sf 3/5;
+
+    ss -> sf 4/5;
+    ss -> sf 4/6;
+
+    ss -> sf 5/6;
+
+    // move towards the left
+    ss -> sf 1/0;
+
+    ss -> sf 2/1;
+    ss -> sf 2/0;
+
+    ss -> sf 3/1;
+    ss -> sf 3/2;
+
+    ss -> sf 4/3;
+    ss -> sf 4/2;
+
+    ss -> sf 5/3;
+    ss -> sf 5/4;
+
+    ss -> sf 6/4;
+    ss -> sf 6/5;
+
+    // do nothing
+    sf -> sf 0/0;
+    sf -> sf 1/1;
+    sf -> sf 2/2;
+    sf -> sf 3/3;
+    sf -> sf 4/4;
+    sf -> sf 5/5;
+    sf -> sf 6/6;
+
+    accepting: ss, sf;
+}
+
+Bad {
+    init: s0;
+
+    s0 -> s1 S;
+    s1 -> s1 1;
+    s1 -> s1 2;
+    s1 -> s1 3;
+    s1 -> s1 4;
+    s1 -> s1 5;
+    s1 -> s2 0;
+    s1 -> s2 6;
+
+    s2 -> s2 1;
+    s2 -> s2 2;
+    s2 -> s2 3;
+    s2 -> s2 4;
+    s2 -> s2 5;
+    s2 -> s2 0;
+    s2 -> s2 6;
+    accepting: s2;
+}
+
+P0 {
+    init: si;
+
+    si -> s1 S;
+    s1 -> s1 1;
+    s1 -> s1 2;
+    s1 -> s1 3;
+    s1 -> s1 4;
+    s1 -> s1 5;
+    s1 -> s1 0;
+    s1 -> s1 6;
+
+    accepting: s1;
+
+}
+
+P1 {
+    init: si;
+
+    si -> s1 E;
+    s1 -> s1 1;
+    s1 -> s1 2;
+    s1 -> s1 3;
+    s1 -> s1 4;
+    s1 -> s1 5;
+    s1 -> s1 0;
+    s1 -> s1 6;
+
+    accepting: s1;
+
+}
+
+
+
+transducerStateGuessing: 1 .. 10;
+automatonStateGuessing: 0 .. 4;

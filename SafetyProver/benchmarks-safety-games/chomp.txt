@@ -1,0 +1,92 @@
+// chomp.txt
+//
+
+Initial {
+    init: si;
+
+    si -> s0 S;
+    s0 -> s0 4;
+
+    accepting: s0;
+}    
+
+Transition {
+    init: si;
+    si -> 
+
+    accepting: s1, e1, p2, q2, r2, a2, b2, c2;
+}
+
+Bad {
+    init: s0;
+
+    s0 -> s1 S;
+    s1 -> s2 1;
+    s2 -> s2 0;
+    accepting: s2;
+}
+
+P0 {
+    init: si;
+
+    si -> s0 S;
+
+    // read 4's
+    s0 -> s0 4;
+    // read 3's or less from now on
+    s0 -> s1 3;
+    s1 -> s1 3;
+    s1 -> s2 2;
+    s1 -> s3 1;
+    s1 -> s4 0;
+    // read 2's or less from now on
+    s0 -> s2 2;
+    s1 -> s2 2;
+    s2 -> s3 1;
+    s2 -> s4 0;
+    // read 1's or less from now on
+    s0 -> s3 1;
+    s3 -> s3 1;
+    s3 -> s4 0;
+    // read 0's or less from now on
+    s0 -> s4 0;
+    s4 -> s4 0;
+
+    accepting: s0,s1,s2,s3,s4;
+
+}
+
+P1 {
+    init: si;
+
+    si -> s0 E;
+
+    // read 4's
+    s0 -> s0 4;
+    // read 3's or less from now on
+    s0 -> s1 3;
+    s1 -> s1 3;
+    s1 -> s2 2;
+    s1 -> s3 1;
+    s1 -> s4 0;
+    // read 2's or less from now on
+    s0 -> s2 2;
+    s1 -> s2 2;
+    s2 -> s3 1;
+    s2 -> s4 0;
+    // read 1's or less from now on
+    s0 -> s3 1;
+    s3 -> s3 1;
+    s3 -> s4 0;
+    // read 0's or less from now on
+    s0 -> s4 0;
+    s4 -> s4 0;
+
+    accepting: s0,s1,s2,s3,s4;
+
+}
+
+
+
+transducerStateGuessing: 1 .. 10;
+automatonStateGuessing: 0 .. 4;

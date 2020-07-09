@@ -1,0 +1,173 @@
+// follow game
+Initial {
+    init: si;
+
+    si -> s0 11;
+    s0 -> s1 11;
+    s1 -> s1 11;
+    s1 -> s11 01;
+    s11 -> s11 01;
+    s11 -> s2 P;
+    s2 -> s3 11;
+    s3 -> s3 11;
+    s3 -> s33 01;
+    s33 -> s33 01;
+    accepting: s33;
+}    
+
+Transition {
+    init: si;
+    // determine player turn
+    si -> sp 00/11;
+    si -> sp 11/00;
+    si -> smovepre 00/11;
+    si -> smovepre 11/00;
+
+    // player is out of bound
+    sp -> sp P/P;
+    // player moves out of bound x
+    smovepre -> sbounds 11/P;
+    smovepre -> sbounds 10/P;
+    sbounds -> sbounds 11/P;
+    sbounds -> sbounds 10/P;
+    sbounds -> boundend P/P;
+    boundend -> boundend 11/P;
+    boundend -> boundend 10/P;
+    boundend -> boundend 01/P;
+    boundend -> boundend 00/P;
+    // player moves out of bound y
+    smovepre -> sboundsy 11/P;
+    smovepre -> sboundsy 10/P;
+    smovepre -> sboundsy 01/P;
+    smovepre -> sboundsy 00/P;
+    sboundsy -> sboundsy 11/P;
+    sboundsy -> sboundsy 10/P;
+    sboundsy -> sboundsy 01/P;
+    sboundsy -> sboundsy 00/P;
+    sboundsy -> boundendy P/P;
+    boundendy -> boundendy 11/P;
+    boundendy -> boundendy 10/P;
+
+    // player moves right
+    smovepre -> smove 11/11;
+    smove -> smoveR1 01/11;
+    smove -> smoveR0 00/10;
+
+    smoveR0 -> smoveR0 00/00;
+    smoveR0 -> smoveYdone P/P;
+    smoveR1 -> smoveR1 01/01;
+    smoveR1 -> smoveR1 00/00;
+    smoveR1 -> smoveYdone P/P;
+
+    smoveYdone -> smoveYdone1 11/11;
+    smoveYdone1 -> smoveYdone1 11/11;
+    smoveYdone1 -> smoveYdone0 00/00;
+    smoveYdone0 -> smoveYdone0 00/00;
+    smoveYdone1 -> smoveYdone10 10/10;
+    smoveYdone10 -> smoveYdone10 10/10;
+    smoveYdone10 -> smoveYdone0;
+    smoveYdone1 -> smoveYdone01 01/01;
+    smoveYdone01 -> smoveYdone01 01/01;
+    smoveYdone1 -> smoveYdone0;
+
+    // player moves left
+    smove -> smoveL1 11/01;
+    smove -> smoveL0 10/00;
+
+    smoveL0 -> smoveL0 00/00;
+    smoveL0 -> smoveYdone P/P;
+    smoveL1 -> smoveL1 01/01;
+    smoveL1 -> smoveL1 00/00;
+    smoveL1 -> smoveYdone P/P;
+
+    // player moves up
+    smove -> smoveXdone 11/11;
+    smoveXdone -> smoveXdone 11/11;
+    smoveXdone -> smoveXdone 00/00;
+    smoveXdone -> smoveXdone 01/01;
+    smoveXdone -> smoveXdone 10/10;
+    smoveXdone -> smoveU P/P;
+    smoveU -> smoveU 11/11;
+    smoveU -> smoveU1 01/11;
+    smoveU -> smoveU0 00/10;
+
+    smoveU0 -> smoveU0 00/00;
+    smoveU1 -> smoveU1 01/01;
+    smoveU1 -> smoveU1 00/00;
+
+    // player moves down
+    smove -> smoveXdone 11/11;
+    smoveXdone -> smoveXdone 11/11;
+    smoveXdone -> smoveXdone 00/00;
+    smoveXdone -> smoveXdone 01/01;
+    smoveXdone -> smoveXdone 10/10;
+    smoveXdone -> smoveXdone1 P/P;
+    smoveXdone1 -> smoveD 11/11;
+    smoveD -> smoveD 11/11;
+    smoveD -> smoveD1 11/01;
+    smoveD -> smoveD0 10/00;
+
+    smoveD0 -> smoveD0 00/00;
+    smoveD1 -> smoveD1 01/01;
+    smoveD1 -> smoveD1 00/00;
+    // player stay
+
+    accepting: smoveD0,smoveD1,smoveU0,smoveU1,smoveYdone0, sp, boundend,boundendy;
+}
+
+Bad {
+  init: s0;
+  s0 -> s1 11;
+  s0 -> s1 00;
+  s1 -> s2 11;
+  s2 -> s2 11;
+  s2 -> s2 00;
+  s2 -> s3 P;
+  s3 -> s4 11;
+  s4 -> s4 11;
+  s4 -> s4 00;
+  accepting: s4;
+}
+
+P0 {
+    init: si;
+    
+    si -> s1 00;
+    s1 -> sp P;
+    sp -> sp P;
+    s1 -> s1 00;
+    s1 -> s1 10;
+    s1 -> s1 01;
+    s1 -> s1 11;
+    s1 -> s2 P;
+    s2 -> s2 00;
+    s2 -> s2 10;
+    s2 -> s2 01;
+    s2 -> s2 11;
+    accepting: s2, sp;
+
+}
+
+P1 {
+    init: si;
+
+    si -> s1 11;
+    s1 -> sp P;
+    sp -> sp P;
+    s1 -> s1 00;
+    s1 -> s1 10;
+    s1 -> s1 01;
+    s1 -> s1 11;
+    s1 -> s2 P;
+    s2 -> s2 00;
+    s2 -> s2 10;
+    s2 -> s2 01;
+    s2 -> s2 11;
+    accepting: s2, sp;
+
+}
+
+
+
+transducerStateGuessing: 1 .. 10;
+automatonStateGuessing: 0 .. 4;

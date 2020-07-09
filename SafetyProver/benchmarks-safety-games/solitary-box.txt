@@ -1,0 +1,158 @@
+// solitary box
+Initial {
+    init: si;
+
+    si -> s0 S;
+    s0 -> s1 00;
+    s0 -> s1 10;
+    s1 -> s1 00;
+    s1 -> s1 10;
+    s1 -> s2 11;
+    s1 -> s2 01;
+    accepting: s2;
+}    
+
+Transition {
+    init: si;
+
+    si -> ss S/S;
+    si -> sa S/S;
+    // system addition enabled x-coordinate
+    ss -> sf 00/10;
+    ss -> sf 01/11;
+    // carry bit saved
+    ss -> sc 10/00;
+    ss -> sc 11/01;
+    // carry still saved
+    sc -> sc 10/00;
+    sc -> sc 11/01;
+    // carry carried over
+    sc -> sf 00/10;
+    sc -> sf 01/11;
+    // do nothing
+    sf -> sf 10/10;
+    sf -> sf 11/11;
+    sf -> sf 00/00;
+    sf -> sf 01/01;
+
+    // system addition enabled y-coordinate
+    ss -> sf 00/01;
+    ss -> sf 10/11;
+    // carry bit saved
+    ss -> syc 01/00;
+    ss -> syc 11/10;
+    // carry still saved
+    syc -> syc 01/00;
+    syc -> syc 11/10;
+    // carry carried over
+    syc -> sf 00/01;
+    syc -> sf 10/11;
+
+ // system substraction enabled x-coordinate
+    ss -> sf 10/00;
+    ss -> sf 11/01;
+    // negative carry bit saved
+    ss -> suc 00/10;
+    ss -> suc 01/11;
+    // carry still saved
+    suc -> suc 00/10;
+    suc -> suc 01/11;
+    // carry carried over
+    suc -> sf 10/00;
+    suc -> sf 11/01;
+
+    // system substraction enabled y-coordinate
+    ss -> sf 01/00;
+    ss -> sf 11/10;
+    // carry bit saved
+    ss -> suyc 00/01;
+    ss -> suyc 10/11;
+    // carry still saved
+    suyc -> suyc 00/01;
+    suyc -> suyc 10/11;
+    // carry carried over
+    suyc -> sf 01/00;
+    suyc -> sf 11/10;
+    // human can stay
+    //se -> sf;
+
+    accepting: sf, sa;
+}
+
+Bad {
+  init: s0;
+  s0 -> s1 S;
+  s0 -> s9 00;
+  s0 -> s9 10;
+  s0 -> s9 11;
+  s0 -> s9 01;
+  s1 -> s9 S;
+  s1 -> s2 00;
+  s1 -> s2 10;
+  s1 -> s3 11;
+  s1 -> s3 01;
+  s2 -> s9 S;
+  s2 -> s2 00;
+  s2 -> s2 10;
+  s2 -> s6 11;
+  s2 -> s6 01;
+  s3 -> s9 S;
+  s3 -> s4 00;
+  s3 -> s4 10;
+  s3 -> s5 11;
+  s3 -> s5 01;
+  s4 -> s9 S;
+  s4 -> s8 00;
+  s4 -> s8 10;
+  s4 -> s6 11;
+  s4 -> s6 01;
+  s5 -> s9 S;
+  s5 -> s6 00;
+  s5 -> s6 10;
+  s5 -> s7 11;
+  s5 -> s7 01;
+  s6 -> s9 S;
+  s6 -> s9 00;
+  s6 -> s9 10;
+  s6 -> s9 11;
+  s6 -> s9 01;
+  s7 -> s9 S;
+  s7 -> s6 00;
+  s7 -> s6 10;
+  s7 -> s7 11;
+  s7 -> s7 01;
+  s8 -> s9 S;
+  s8 -> s8 00;
+  s8 -> s8 10;
+  s8 -> s6 11;
+  s8 -> s6 01;
+  s9 -> s9 S;
+  s9 -> s9 00;
+  s9 -> s9 10;
+  s9 -> s9 11;
+  s9 -> s9 01;
+  accepting: s0, s1, s2, s3, s7, s8, s9;
+}
+
+P0 {
+    init: si;
+
+    si -> s0 S;
+    s0 -> s0 00;
+    s0 -> s0 01;
+    s0 -> s0 10;
+    s0 -> s0 11;
+
+    accepting: s0;
+
+}
+
+P1 {
+    init: si;
+    accepting: s0;
+}
+
+
+
+transducerStateGuessing: 1 .. 10;
+automatonStateGuessing: 0 .. 4;

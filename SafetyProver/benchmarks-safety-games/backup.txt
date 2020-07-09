@@ -1,0 +1,244 @@
+Bad {
+    init: s0;
+
+    s0 -> s1 E;
+    //s0 -> s1 S;
+    // Handle X coordinate first, difference is 0, 1 or 2
+    s1 -> dx0;
+    s1 -> dx1;
+    s1 -> dx2;
+    
+    //  difference is 0
+    dx0 -> dx0 0000;
+    dx0 -> dx0 1010;
+    dx0 -> dx0 0101;
+    dx0 -> dx0 1111;
+
+    dx1 -> dx11;
+    dx1 -> dx21;
+   
+    dx2 -> dx12;
+    dx2 -> dx22;
+
+    // x1 coordinate is smaller by 1
+    dx11 -> dx11 1000;
+    dx11 -> dx11 1101;
+    dx11 -> dx112 0010;
+    dx11 -> dx112 0111;
+    dx112 -> dx112 0000;
+    dx112 -> dx112 0101;
+    dx112 -> dx112 1010;
+    dx112 -> dx112 1111;
+
+    // x2 coordinate is smaller by 1
+    dx21 -> dx21 0010;
+    dx21 -> dx21 0111;
+    dx21 -> dx212 1000;
+    dx21 -> dx212 1101;
+    dx212 -> dx212 0000;
+    dx212 -> dx212 0101;
+    dx212 -> dx212 1010;
+    dx212 -> dx212 1111;
+   
+    // x1 coordinate is smaller by 2
+    dx12 -> dx121 0000;
+    dx12 -> dx121 0101;
+    dx12 -> dx121 1010;
+    dx12 -> dx121 1111;
+    dx121 -> dx121 1000;
+    dx121 -> dx121 1101;
+    dx121 -> dx122 0010;
+    dx121 -> dx122 0111;
+    dx122 -> dx122 0000;
+    dx122 -> dx122 0101;
+    dx122 -> dx122 1010;
+    dx122 -> dx122 1111; 
+
+    // x2 coordinate is smaller by 2
+    dx22 -> dx221 0000;
+    dx22 -> dx221 0101;
+    dx22 -> dx221 1010;
+    dx22 -> dx221 1111;
+    dx221 -> dx221 1000;
+    dx221 -> dx221 1101;
+    dx221 -> dx222 0010;
+    dx221 -> dx222 0111;
+    dx222 -> dx222 0000;
+    dx222 -> dx222 0101;
+    dx222 -> dx222 1010;
+    dx222 -> dx222 1111;
+
+    // Handle y coordinate next, difference is 0, 1 or 2
+    s1 -> dy0;
+    s1 -> dy1;
+    s1 -> dy2;
+    
+    //  difference is 0
+    dy0 -> dy0 0000;
+    dy0 -> dy0 1010;
+    dy0 -> dy0 0101;
+    dy0 -> dy0 1111;
+
+    dy1 -> dy11;
+    dy1 -> dy21;
+   
+    dy2 -> dy12;
+    dy2 -> dy22;
+
+    // y1 coordinate is smaller by 1
+    dy11 -> dy11 0100;
+    dy11 -> dy11 1110;
+    dy11 -> dy112 0001;
+    dy11 -> dy112 1011;
+    dy112 -> dy112 0000;
+    dy112 -> dy112 0101;
+    dy112 -> dy112 1010;
+    dy112 -> dy112 1111;
+
+    // y2 coordinate is smaller by 1
+    dy21 -> dy21 0001;
+    dy21 -> dy21 1011;
+    dy21 -> dy212 0100;
+    dy21 -> dy212 1110;
+    dy212 -> dy212 0000;
+    dy212 -> dy212 0101;
+    dy212 -> dy212 1010;
+    dy212 -> dy212 1111;
+   
+    // y1 coordinate is smaller by 2
+    dy12 -> dy121 0000;
+    dy12 -> dy121 0101;
+    dy12 -> dy121 1010;
+    dy12 -> dy121 1111;
+    dy121 -> dy121 0100;
+    dy121 -> dy121 1110;
+    dy121 -> dy122 0001;
+    dy121 -> dy122 1011;
+    dy122 -> dy122 0000;
+    dy122 -> dy122 0101;
+    dy122 -> dy122 1010;
+    dy122 -> dy122 1111; 
+
+    // y2 coordinate is smaller by 2
+    dy22 -> dy221 0000;
+    dy22 -> dy221 0101;
+    dy22 -> dy221 1010;
+    dy22 -> dy221 1111;
+    dy221 -> dy221 0001;
+    dy221 -> dy221 1011;
+    dy221 -> dy222 0100;
+    dy221 -> dy222 1110;
+    dy222 -> dy222 0000;
+    dy222 -> dy222 0101;
+    dy222 -> dy222 1010;
+    dy222 -> dy222 1111;
+
+    // x and y coordinate differ by one x1 y1, x1 y2, x2 y1, x2 y2
+
+
+
+
+    accepting: dy222, dy122, dy212, dy112, dy0, dx222, dx122, dx212, dx112, dx0;
+}
+
+//box
+Bad {
+    init: s0;
+
+    s0 -> s1 S;
+    s1 -> s2;
+    s1 -> s3 01;
+    s1 -> s3 11;
+
+    s2 -> st 01;
+    s2 -> st 11;
+    st -> st1 01;
+    st -> st1 11;
+    st -> st 00;
+    st -> st 10;
+
+    s3 -> s3 01;
+    s3 -> s3 11;
+    s3 -> st3 00;
+    s3 -> st3 10;
+
+    s0 -> si0 S;
+    si0 -> si1 00;
+    si0 -> si1 10;
+    si1 -> si1 00;
+    si1 -> si1 10;
+    si1 -> si2 11;
+    si1 -> si2 01;
+    accepting: st1, st3, si2;
+}
+// diagonal safe
+Bad {
+    init: s0;
+
+    s0 -> s1 E;
+    s0 -> s1 S;
+    // Handle X coordinate first, difference is 0 or 1
+    s1 -> dx0;
+    s1 -> dx1;
+    
+    //  difference is 0
+    dx0 -> dx0 00;
+    dx0 -> dx0 11;
+
+    dx1 -> dx11;
+    dx1 -> dx12;  
+
+    // x1 coordinate is smaller by 1
+    dx11 -> dx112 01;
+    dx112 -> dx112 00;
+    dx112 -> dx112 11;
+    // carry over
+    dx11 -> dxc11 10;
+    dxc11 -> dxc11 10;
+    dxc11 -> dxcf 01;
+    dxcf -> dxcf 00;
+    dxcf -> dxcf 11;
+
+    // x1 coordinate is greater by 1
+    dx12 -> dx122 10;
+    dx122 -> dx122 00;
+    dx122 -> dx122 11;
+    // carry over
+    dx11 -> dxc11 01;
+    dxc11 -> dxc11 01;
+    dxc11 -> dxcf 10;   
+
+    accepting: dxcf, dx112, dx122, dx0;
+}
+follow unary safe
+Bad {
+// safe
+  init: si;
+    si -> s0 00;
+    si -> s0 11;
+    s0 -> s1 11;
+    s1 -> s1 11;
+    s1 -> sP;
+    s1 -> stop 01;
+    s1 -> sbot 10;
+    stop -> sP;
+    stop -> sP 01;
+    sbot -> sP;
+    sbot -> sP 10;
+    stop -> sP;
+
+    sP -> sP 00;
+    sP -> sy P;
+    sy -> sy1 11;
+    sy1 -> sy1 11;
+    sy1 -> syP;
+    sy1 -> sytop 01;
+    sy1 -> sybot 10;
+    sytop -> syP;
+    sytop -> syP 01;
+    sybot -> syP;
+    sybot -> syP 10;
+    sytop -> syP;
+    syP -> syP 00;
+  accepting: syP;
+}

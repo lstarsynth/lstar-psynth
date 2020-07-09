@@ -1,0 +1,83 @@
+// take-away
+//
+// 
+Initial {
+    init: si;
+
+    si -> s0 b;
+    s0 -> s0 b;
+    s0 -> s1 w;
+    s1 -> s2 w;
+    s2 -> s1 w;
+    accepting: s1;
+}    
+
+Transition {
+    init: si;
+
+    // Empty P0
+    si -> si b/b;
+
+    si -> s0 b/0;
+    s0 -> s0 0/0;
+    s0 -> s1 ;
+    s1 -> s1 w/w;
+    s1 -> s2 ;
+    s2 -> s2 0/0;
+
+    si -> s3 0/b;
+    s3 -> s4;
+    s4 -> s4 w/w;
+    s4 -> s5;
+    s5 -> s5 0/0;
+
+    si -> s6 w/b;
+    s6 -> s6 w/w;
+    s6 -> s7 w/0;
+    s7 -> s7 0/0;
+
+    si -> s8 0/0;
+    s8 -> s8 0/0;
+    s8 -> s9 w/w;
+    s9 -> s9 0/0;
+
+    accepting: s2,s5,s7,s9	;  
+
+}
+
+Bad {
+    init: s0;
+
+    s0 -> s1 b;
+    s1 -> s1 0;
+ 
+    accepting: s1;
+}
+
+P0 {
+    init: si;
+
+    si -> s0 0;
+    s0 -> s1 0;
+    s0 -> s1 1;
+    s1 -> s1 0;
+    s1 -> s1 1;
+
+    accepting: s2;
+
+}
+
+P1 {
+    init: si;
+
+    si -> si b;
+    si -> si w;
+    si -> si 0;
+    accepting: si;
+
+}
+
+
+
+transducerStateGuessing: 1 .. 10;
+automatonStateGuessing: 0 .. 4;

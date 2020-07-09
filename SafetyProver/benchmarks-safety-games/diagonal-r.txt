@@ -1,0 +1,126 @@
+// 1-robot-vacuum-quadratic.txt
+Initial {
+    init: si;
+
+    si -> s0 E;
+    s0 -> s2 00;
+    s1 -> s2 00;
+    s2 -> s2 00;
+    accepting: s2;
+}    
+
+Transition {
+    init: si;
+
+    si -> ss S/E;
+    si -> se E/S;
+    si -> se S/E;
+    si -> ss E/S;
+    // system addition enabled x-coordinate
+    ss -> sf 00/10;
+    ss -> sf 01/11;
+    // carry bit saved
+    ss -> sc 10/00;
+    ss -> sc 11/01;
+    // carry still saved
+    sc -> sc 10/00;
+    sc -> sc 11/01;
+    // carry carried over
+    sc -> sf 00/10;
+    sc -> sf 01/11;
+    // do nothing
+    sf -> sf 10/10;
+    sf -> sf 11/11;
+    sf -> sf 00/00;
+    sf -> sf 01/01;
+
+    // system addition enabled y-coordinate
+    se -> sf 00/01;
+    se -> sf 10/11;
+    // carry bit saved
+    se -> syc 01/00;
+    se -> syc 11/10;
+    // carry still saved
+    syc -> syc 01/00;
+    syc -> syc 11/10;
+    // carry carried over
+    syc -> sf 00/01;
+    syc -> sf 10/11;
+
+ // system substraction enabled x-coordinate
+    ss -> sf 10/00;
+    ss -> sf 11/01;
+    // negative carry bit saved
+    ss -> suc 00/10;
+    ss -> suc 01/11;
+    // carry still saved
+    suc -> suc 00/10;
+    suc -> suc 01/11;
+    // carry carried over
+    suc -> sf 10/00;
+    suc -> sf 11/01;
+
+    // system substraction enabled y-coordinate
+    se-> sf 01/00;
+    se -> sf 11/10;
+    // carry bit saved
+    se -> suyc 00/01;
+    se -> suyc 10/11;
+    // carry still saved
+    suyc -> suyc 00/01;
+    suyc -> suyc 10/11;
+    // carry carried over
+    suyc -> sf 01/00;
+    suyc -> sf 11/10;
+    // human can stay
+    //se -> sf;
+
+    accepting: sf, sa;
+}
+
+Bad {
+  init: s0;
+  s0 -> s1 E;
+  s1 -> s1 00;
+  s1 -> s1 01;
+  s1 -> s1 10;
+  s1 -> s1 11;
+  s1 -> s2 01;
+  s1 -> s2 10;
+  s2 -> s2 00;
+  s2 -> s2 01;
+  s2 -> s2 10;
+  s2 -> s2 11;
+  accepting: s2;
+}
+
+P0 {
+    init: si;
+
+    si -> s0 S;
+    s0 -> s0 00;
+    s0 -> s0 01;
+    s0 -> s0 10;
+    s0 -> s0 11;
+
+    accepting: s0;
+
+}
+
+P1 {
+    init: si;
+
+    si -> s0 E;
+    s0 -> s0 00;
+    s0 -> s0 01;
+    s0 -> s0 10;
+    s0 -> s0 11;
+
+    accepting: s0;
+
+}
+
+
+
+transducerStateGuessing: 1 .. 10;
+automatonStateGuessing: 0 .. 4;

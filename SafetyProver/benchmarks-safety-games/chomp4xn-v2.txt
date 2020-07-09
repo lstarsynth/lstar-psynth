@@ -1,0 +1,214 @@
+// chomp4xn.txt
+//
+// The encoding of this model exploits the observation
+// that it takes at most k points to describe the removed
+// area of a k-times-n Chomp game, such that each point is
+// a corner of the removed area.
+//
+// The coordinates of the grid start from 1;
+// thus the poisoned cell is (1,1).
+// The state space of the game is encoded in regex as
+// (S+E)5*(e+4*(e+3*(e+2*(e+1*)))),
+// where e denotes epsilon.
+// In each word, the *first* occurrence of a number
+// y \in {4,3,2,1} at position x means that (x,y)
+// is a corner of the removed area.
+// Furthermore, each number in a word is repeated after
+// its first occurrence until a new (smaller) number
+// appears. For example, a P0-vertex of the 4x6 Chomp game
+// where the removed area has corner points (2,3) and (4,1)
+// is encoded as S533111, which corresponds to the config
+// |+-----|
+// |+-----|
+// |+++---|
+// |+++---|
+// Hence the set of the bad states is S11* in regex,
+// meaning that the poisoned cell is removed by P0.
+
+
+Initial {
+    init: si;
+    // n >= 2
+    si -> s0 S;
+    s0 -> s1 5;
+    s1 -> s2 5;
+    s2 -> s2 5;
+    accepting: s2;
+}    
+
+Transition {
+    init: si;
+
+    // P1 transitions
+    si -> ss E/S;
+    si -> sl E/E;
+
+    // P0 transitions
+    si -> ss S/E;
+    si -> sl S/S;
+
+    // Winning/losing turn
+    sl -> s1 5/1;
+    sl -> s1 4/1;
+    sl -> s1 3/1;
+    sl -> s1 2/1;
+    sl -> s1 1/1; 
+
+    // choose a position to chomp
+
+    // 5 has occurred
+    ss -> p5 5/5;
+    p5 -> p5 5/5;
+
+    // 4 has occurred
+    ss -> p4 4/4;
+    p5 -> p4 4/4;
+    p4 -> p4 4/4;
+
+    // 3 has occurred
+    ss -> p3 3/3;
+    p5 -> p3 3/3;
+    p4 -> p3 3/3;
+    p3 -> p3 3/3;
+
+    // 2 has occurred
+    ss -> p2 2/2;
+    p5 -> p2 2/2;
+    p4 -> p2 2/2;
+    p3 -> p2 2/2;
+    p2 -> p2 2/2;
+
+    // after chomping somewhere
+
+    // chomped at y=1
+    s1 -> s1 5/1;
+    s1 -> s1 4/1;
+    s1 -> s1 3/1;
+    s1 -> s1 2/1;
+    s1 -> s1 1/1;
+    p5 -> s1 5/1;
+    p4 -> s1 4/1;
+    p3 -> s1 3/1;
+    p2 -> s1 2/1;
+
+    // chomped at y=2
+    ss -> s2 5/2;
+    ss -> s2 4/2;
+    ss -> s2 3/2;
+    s2 -> s2 5/2;
+    s2 -> s2 4/2;
+    s2 -> s2 3/2;
+    s2 -> s2 2/2;
+    p5 -> s2 5/2;
+    p4 -> s2 4/2;
+    p3 -> s2 3/2;
+    s2 -> s1 1/1;
+
+    // chomped at y=3
+    ss -> s3 5/3;
+    ss -> s3 4/3;
+    s3 -> s3 5/3;
+    s3 -> s3 4/3;
+    s3 -> s3 3/3;
+    p5 -> s3 5/3;
+    p4 -> s3 4/3;
+    s3 -> s2 2/2;
+    s3 -> s1 1/1;
+
+    // chomped at y=4
+    ss -> s4 5/4;
+    s4 -> s4 5/4;
+    s4 -> s4 4/4;
+    p5 -> s4 5/4;
+    s4 -> s3 3/3;
+    s4 -> s2 2/2;
+    s4 -> s1 1/1;
+
+    accepting: s1,s2,s3,s4;
+}
+
+Bad {
+    init: s0;
+    s0 -> s1 S;
+    s1 -> s2 1;
+    s2 -> s2 1;
+    accepting: s2;
+}
+
+P0 {
+    init: si;
+    si -> ss S;
+
+    // 5 has occurred
+    ss -> p5 5;
+    p5 -> p5 5;
+
+    // 4 has occurred
+    ss -> p4 4;
+    p5 -> p4 4;
+    p4 -> p4 4;
+
+    // 3 has occurred
+    ss -> p3 3;
+    p5 -> p3 3;
+    p4 -> p3 3;
+    p3 -> p3 3;
+
+    // 2 has occurred
+    ss -> p2 2;
+    p5 -> p2 2;
+    p4 -> p2 2;
+    p3 -> p2 2;
+    p2 -> p2 2;
+
+    // 1 has occurred
+    ss -> p1 1;
+    p5 -> p1 1;
+    p4 -> p1 1;
+    p3 -> p1 1;
+    p2 -> p1 1;
+    p1 -> p1 1;
+
+    accepting: p1,p2,p3,p4,p5;
+}
+
+P1 {
+    init: si;
+    si -> ss E;
+
+    // 5 has occurred
+    ss -> p5 5;
+    p5 -> p5 5;
+
+    // 4 has occurred
+    ss -> p4 4;
+    p5 -> p4 4;
+    p4 -> p4 4;
+
+    // 3 has occurred
+    ss -> p3 3;
+    p5 -> p3 3;
+    p4 -> p3 3;
+    p3 -> p3 3;
+
+    // 2 has occurred
+    ss -> p2 2;
+    p5 -> p2 2;
+    p4 -> p2 2;
+    p3 -> p2 2;
+    p2 -> p2 2;
+
+    // 1 has occurred
+    ss -> p1 1;
+    p5 -> p1 1;
+    p4 -> p1 1;
+    p3 -> p1 1;
+    p2 -> p1 1;
+    p1 -> p1 1;
+
+    accepting: p1,p2,p3,p4,p5;
+}
+
+
+transducerStateGuessing: 1 .. 10;
+automatonStateGuessing: 0 .. 4;
