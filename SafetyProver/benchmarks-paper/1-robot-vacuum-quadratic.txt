@@ -1,0 +1,406 @@
+// 1-robot-vacuum-quadratic.txt
+Initial {
+    init: si;
+
+    si -> s0 S;
+    s0 -> s2 0011;
+    s2 -> s2 0011;
+    accepting: s2;
+}    
+
+Transition {
+    init: si;
+
+    si -> ss S/E;
+    si -> se E/S;
+    si -> sa S/E;
+    si -> sa E/S;
+    // system addition enabled x-coordinate
+    ss -> sf 0000/1000;
+    ss -> sf 0001/1001;
+    ss -> sf 0010/1010;
+    ss -> sf 0011/1011;
+    ss -> sf 0100/1100;
+    ss -> sf 0101/1101;
+    ss -> sf 0110/1110;
+    ss -> sf 0111/1111;
+    // carry bit saved
+    ss -> sc 1000/0000;
+    ss -> sc 1001/0001;
+    ss -> sc 1010/0010;
+    ss -> sc 1011/0011;
+    ss -> sc 1100/0100;
+    ss -> sc 1101/0101;
+    ss -> sc 1110/0110;
+    ss -> sc 1111/0111;
+    // carry still saved
+    sc -> sc 1000/0000;
+    sc -> sc 1001/0001;
+    sc -> sc 1010/0010;
+    sc -> sc 1011/0011;
+    sc -> sc 1100/0100;
+    sc -> sc 1101/0101;
+    sc -> sc 1110/0110;
+    sc -> sc 1111/0111;
+    // carry carried over
+    sc -> sf 0000/1000;
+    sc -> sf 0001/1001;
+    sc -> sf 0010/1010;
+    sc -> sf 0011/1011;
+    sc -> sf 0100/1100;
+    sc -> sf 0101/1101;
+    sc -> sf 0110/1110;
+    sc -> sf 0111/1111;
+    // do nothing
+    sf -> sf 1000/1000;
+    sf -> sf 1001/1001;
+    sf -> sf 1010/1010;
+    sf -> sf 1011/1011;
+    sf -> sf 1100/1100;
+    sf -> sf 1101/1101;
+    sf -> sf 1110/1110;
+    sf -> sf 1111/1111;
+
+    sf -> sf 0000/0000;
+    sf -> sf 0001/0001;
+    sf -> sf 0010/0010;
+    sf -> sf 0011/0011;
+    sf -> sf 0100/0100;
+    sf -> sf 0101/0101;
+    sf -> sf 0110/0110;
+    sf -> sf 0111/0111;
+
+    // system addition enabled y-coordinate
+    ss -> sf 0000/0100;
+    ss -> sf 0001/0101;
+    ss -> sf 0010/0110;
+    ss -> sf 0011/0111;
+    ss -> sf 1000/1100;
+    ss -> sf 1001/1101;
+    ss -> sf 1010/1110;
+    ss -> sf 1011/1111;
+    // carry bit saved
+    ss -> syc 0100/0000;
+    ss -> syc 0101/0001;
+    ss -> syc 0110/0010;
+    ss -> syc 0111/0011;
+    ss -> syc 1100/1000;
+    ss -> syc 1101/1001;
+    ss -> syc 1110/1010;
+    ss -> syc 1111/1011;
+    // carry still saved
+    syc -> syc 0100/0000;
+    syc -> syc 0101/0001;
+    syc -> syc 0110/0010;
+    syc -> syc 0111/0011;
+    syc -> syc 1100/1000;
+    syc -> syc 1101/1001;
+    syc -> syc 1110/1010;
+    syc -> syc 1111/1011;
+    // carry carried over
+    syc -> sf 0000/0100;
+    syc -> sf 0001/0101;
+    syc -> sf 0010/0110;
+    syc -> sf 0011/0111;
+    syc -> sf 1000/1100;
+    syc -> sf 1001/1101;
+    syc -> sf 1010/1110;
+    syc -> sf 1011/1111;
+
+ // system substraction enabled x-coordinate
+    ss -> sf 1000/0000;
+    ss -> sf 1001/0001;
+    ss -> sf 1010/0010;
+    ss -> sf 1011/0011;
+    ss -> sf 1100/0100;
+    ss -> sf 1101/0101;
+    ss -> sf 1110/0110;
+    ss -> sf 1111/0111;
+    // negative carry bit saved
+    ss -> suc 0000/1000;
+    ss -> suc 0001/1001;
+    ss -> suc 0010/1010;
+    ss -> suc 0011/1011;
+    ss -> suc 0100/1100;
+    ss -> suc 0101/1101;
+    ss -> suc 0110/1110;
+    ss -> suc 0111/1111;
+    // carry still saved
+    suc -> suc 0000/1000;
+    suc -> suc 0001/1001;
+    suc -> suc 0010/1010;
+    suc -> suc 0011/1011;
+    suc -> suc 0100/1100;
+    suc -> suc 0101/1101;
+    suc -> suc 0110/1110;
+    suc -> suc 0111/1111;
+    // carry carried over
+    suc -> sf 1000/0000;
+    suc -> sf 1001/0001;
+    suc -> sf 1010/0010;
+    suc -> sf 1011/0011;
+    suc -> sf 1100/0100;
+    suc -> sf 1101/0101;
+    suc -> sf 1110/0110;
+    suc -> sf 1111/0111;
+
+    // system substraction enabled y-coordinate
+    ss -> sf 0100/0000;
+    ss -> sf 0101/0001;
+    ss -> sf 0110/0010;
+    ss -> sf 0111/0011;
+    ss -> sf 1100/1000;
+    ss -> sf 1101/1001;
+    ss -> sf 1110/1010;
+    ss -> sf 1111/1011;
+    // carry bit saved
+    ss -> suyc 0000/0100;
+    ss -> suyc 0001/0101;
+    ss -> suyc 0010/0110;
+    ss -> suyc 0011/0111;
+    ss -> suyc 1000/1100;
+    ss -> suyc 1001/1101;
+    ss -> suyc 1010/1110;
+    ss -> suyc 1011/1111;
+    // carry still saved
+    suyc -> suyc 0000/0100;
+    suyc -> suyc 0001/0101;
+    suyc -> suyc 0010/0110;
+    suyc -> suyc 0011/0111;
+    suyc -> suyc 1000/1100;
+    suyc -> suyc 1001/1101;
+    suyc -> suyc 1010/1110;
+    suyc -> suyc 1011/1111;
+    // carry carried over
+    suyc -> sf 0100/0000;
+    suyc -> sf 0101/0001;
+    suyc -> sf 0110/0010;
+    suyc -> sf 0111/0011;
+    suyc -> sf 1100/1000;
+    suyc -> sf 1101/1001;
+    suyc -> sf 1110/1010;
+    suyc -> sf 1111/1011;
+
+
+    // human addition enabled x-coordinate
+    se -> sf 0000/0010;
+    se -> sf 0001/0011;
+    se -> sf 0100/0110;
+    se -> sf 0101/0111;
+    se -> sf 1000/1010;
+    se -> sf 1001/1011;
+    se -> sf 1100/1110;
+    se -> sf 1101/1111;
+    // carry bit saved
+    se -> sec 0010/0000;
+    se -> sec 0011/0001;
+    se -> sec 0110/0100;
+    se -> sec 0111/0101;
+    se -> sec 1010/1000;
+    se -> sec 1011/1001;
+    se -> sec 1110/1100;
+    se -> sec 1111/1101;
+    // carry still saved
+    sec -> sec 0010/0000;
+    sec -> sec 0011/0001;
+    sec -> sec 0110/0100;
+    sec -> sec 0111/0101;
+    sec -> sec 1010/1000;
+    sec -> sec 1011/1001;
+    sec -> sec 1110/1100;
+    sec -> sec 1111/1101;
+    // carry carried over
+    sec -> sf 0000/0010;
+    sec -> sf 0001/0011;
+    sec -> sf 0100/0110;
+    sec -> sf 0101/0111;
+    sec -> sf 1000/1010;
+    sec -> sf 1001/1011;
+    sec -> sf 1100/1110;
+    sec -> sf 1101/1111;
+
+    // human addition enabled y-coordinate
+    se -> sf 0000/0001;
+    se -> sf 0010/0011;
+    se -> sf 0100/0101;
+    se -> sf 0110/0111;
+    se -> sf 1000/1001;
+    se -> sf 1010/1011;
+    se -> sf 1100/1101;
+    se -> sf 1110/1111;
+    // carry bit saved
+    se -> seyc 0001/0000;
+    se -> seyc 0011/0010;
+    se -> seyc 0101/0100;
+    se -> seyc 0111/0110;
+    se -> seyc 1001/1000;
+    se -> seyc 1011/1010;
+    se -> seyc 1101/1100;
+    se -> seyc 1111/1110;
+    // carry still saved
+    seyc -> seyc 0001/0000;
+    seyc -> seyc 0011/0010;
+    seyc -> seyc 0101/0100;
+    seyc -> seyc 0111/0110;
+    seyc -> seyc 1001/1000;
+    seyc -> seyc 1011/1010;
+    seyc -> seyc 1101/1100;
+    seyc -> seyc 1111/1110;
+    // carry carried over
+    seyc -> sf 0000/0001;
+    seyc -> sf 0010/0011;
+    seyc -> sf 0100/0101;
+    seyc -> sf 0110/0111;
+    seyc -> sf 1000/1001;
+    seyc -> sf 1010/1011;
+    seyc -> sf 1100/1101;
+    seyc -> sf 1110/1111;
+
+ // human substraction enabled x-coordinate
+    se -> sf 0010/0000;
+    se -> sf 0011/0001;
+    se -> sf 0110/0100;
+    se -> sf 0111/0101;
+    se -> sf 1010/1000;
+    se -> sf 1011/1001;
+    se -> sf 1110/1100;
+    se -> sf 1111/1101;
+    // negative carry bit saved
+    se -> suexc 0000/0010;
+    se -> suexc 0001/0011;
+    se -> suexc 0100/0110;
+    se -> suexc 0101/0111;
+    se -> suexc 1000/1010;
+    se -> suexc 1001/1011;
+    se -> suexc 1100/1110;
+    se -> sueyc 1101/1111;
+    // carry still saved
+    suexc -> suexc 0000/0010;
+    suexc -> suexc 0001/0011;
+    suexc -> suexc 0100/0110;
+    suexc -> suexc 0101/0111;
+    suexc -> suexc 1000/1010;
+    suexc -> suexc 1001/1011;
+    suexc -> suexc 1100/1110;
+    suexc -> suexc 1101/1111;
+    // carry carried over
+    suexc -> sf 0010/0000;
+    suexc -> sf 0011/0001;
+    suexc -> sf 0110/0100;
+    suexc -> sf 0111/0101;
+    suexc -> sf 1010/1000;
+    suexc -> sf 1011/1001;
+    suexc -> sf 1110/1100;
+    suexc -> sf 1111/1101;
+
+    // human substraction enabled y-coordinate
+    se -> sf 0001/0000;
+    se -> sf 0011/0010;
+    se -> sf 0101/0100;
+    se -> sf 0111/0110;
+    se -> sf 1001/1000;
+    se -> sf 1011/1010;
+    se -> sf 1101/1100;
+    se -> sf 1111/1110;
+    // negative carry bit saved
+    se -> sueyc 0000/0001;
+    se -> sueyc 0010/0011;
+    se -> sueyc 0100/0101;
+    se -> sueyc 0110/0111;
+    se -> sueyc 1000/1001;
+    se -> sueyc 1010/1011;
+    se -> sueyc 1100/1101;
+    se -> sueyc 1110/1111;
+    // carry still saved
+    sueyc -> sueyc 0000/0001;
+    sueyc -> sueyc 0010/0011;
+    sueyc -> sueyc 0100/0101;
+    sueyc -> sueyc 0110/0111;
+    sueyc -> sueyc 1000/1001;
+    sueyc -> sueyc 1010/1011;
+    sueyc -> sueyc 1100/1101;
+    sueyc -> sueyc 1110/1111;
+    // carry carried over
+    sueyc -> sf 0001/0000;
+    sueyc -> sf 0011/0010;
+    sueyc -> sf 0101/0100;
+    sueyc -> sf 0111/0110;
+    sueyc -> sf 1001/1000;
+    sueyc -> sf 1011/1010;
+    sueyc -> sf 1101/1100;
+    sueyc -> sf 1111/1110;
+    // human can stay
+    se -> sf;
+
+    accepting: sf, sa;
+}
+
+Bad {
+    init: s0;
+
+    s0 -> s1 E;
+    s1 -> s2 0000;
+    s1 -> s2 0101;
+    s1 -> s2 1010;
+    s1 -> s2 1111;
+    s2 -> s2 0000;
+    s2 -> s2 0101;
+    s2 -> s2 1010;
+    s2 -> s2 1111;
+    accepting: s2;
+}
+
+P0 {
+    init: si;
+
+    si -> s0 S;
+    s0 -> s0 0000;
+    s0 -> s0 0001;
+    s0 -> s0 0010;
+    s0 -> s0 0011;
+    s0 -> s0 0100;
+    s0 -> s0 0101;
+    s0 -> s0 0110;
+    s0 -> s0 0111;
+    s0 -> s0 1000;
+    s0 -> s0 1001;
+    s0 -> s0 1010;
+    s0 -> s0 1011;
+    s0 -> s0 1100;
+    s0 -> s0 1101;
+    s0 -> s0 1110;
+    s0 -> s0 1111;
+
+    accepting: s0;
+
+}
+
+P1 {
+    init: si;
+
+    si -> s0 E;
+    s0 -> s0 0000;
+    s0 -> s0 0001;
+    s0 -> s0 0010;
+    s0 -> s0 0011;
+    s0 -> s0 0100;
+    s0 -> s0 0101;
+    s0 -> s0 0110;
+    s0 -> s0 0111;
+    s0 -> s0 1000;
+    s0 -> s0 1001;
+    s0 -> s0 1010;
+    s0 -> s0 1011;
+    s0 -> s0 1100;
+    s0 -> s0 1101;
+    s0 -> s0 1110;
+    s0 -> s0 1111;
+
+    accepting: s0;
+
+}
+
+
+
+transducerStateGuessing: 1 .. 10;
+automatonStateGuessing: 0 .. 4;

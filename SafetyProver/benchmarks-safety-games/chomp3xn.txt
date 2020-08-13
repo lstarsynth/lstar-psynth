@@ -1,4 +1,9 @@
 // chomp.txt
+//
+// One example of this is the Chomp game by David Gale.
+// The game is a two-player strategy game which is played with a chocolate bar. 
+// A move of a player is picking one block of the chocolate bar and eating all blocks above and right of it (including the chosen block).
+// This version looks at chocolate bars of size 3xn.
 
 Initial {
     init: si;

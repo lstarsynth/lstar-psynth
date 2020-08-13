@@ -31,7 +31,6 @@ public class FiniteGames {
         finiteStateSets = new FiniteStateSets(I,T,B);
 
     }
-    // TODO does not work properly, computes only 1 step and terminates? check amount of steps. check the computed predecessors of Bad
     public Automata getAttractor_player1_toBad(int wordLen) {
         Automata marked = reachableStateAutomata.get(wordLen);
         if (marked != null){
@@ -63,7 +62,7 @@ public class FiniteGames {
                 Automata predecessors_v0 = AutomataUtility.getIntersection(predecessors, v_0);
                 Automata predecessors_v1 = AutomataUtility.minimiseAcyclic(AutomataUtility.getIntersection(predecessors,v_1));
                 //LOGGER.debug(predecessors_v1.prettyPrint("\n--------------\nP1 predecessors:", NoInvariantException.getIndexToLabelMapping()) + "\n---------------------\n");
-                // TODO is this right?
+
                 predecessors_v0 = AutomataUtility.minimiseAcyclic(AutomataUtility.getDifference(predecessors_v0,marked));
                 List<List<Integer>> v0_predecessor_vertices = AutomataUtility.getWords(predecessors_v0, wordLen);
                 //LOGGER.debug(predecessors.prettyPrint("Predecessors", NoInvariantException.getIndexToLabelMapping()));
@@ -71,7 +70,7 @@ public class FiniteGames {
                  Save all v0 vertices with amount of successors in a map
                  */
                 //LOGGER.debug(" Amount of v0 pred: " + v0_predecessor_vertices.size());
-                // TODO Bottleneck in computation
+
                 for(List<Integer> v : v0_predecessor_vertices){
                     if(!v0_markings.containsKey(v)){
                         Automata image_v = VerificationUtility.getImage(v,T,marked.getNumLabels());
@@ -172,7 +171,7 @@ public class FiniteGames {
         if (I.accepts(word)){
             return true;
         }
-        // TODO make I finite?
+
         //LOGGER.debug("Player 0 attractor computation starting");
         Automata attractor_of_word = getAttractor_player1_toState(word.size(), produceWordAutomaton(word, I.getNumLabels()));
         return ((AutomataUtility.getIntersection(I,attractor_of_word)).findAcceptingString() !=null);
@@ -192,7 +191,7 @@ public class FiniteGames {
         }
         return result;
     }
-    // TODO produceWord Automaton creates wrong automaton... missing letters!
+
     public Automata produceWordAutomaton(List<Integer> word, int numLetters){
         Automata result = new Automata(0,word.size()+1,numLetters);
         for(int i = 0; i< word.size(); i++) {

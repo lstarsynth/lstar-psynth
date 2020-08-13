@@ -1,6 +1,9 @@
 // take-away
-//
-// 
+// There are two players, Player 0 and Player 1 and a pile of 21 chips in the center of the table.
+//	The players take alternating turns removing from one up to three chips at once from the pile.
+//	The player who removes the last chip of the pile is the winner of the game.
+//	Player 0 takes the first turn.
+
 Initial {
     init: si;
 
@@ -9,8 +12,6 @@ Initial {
     s1 -> s2 1;
     s2 -> s3 1;
     s3 -> s0 1;
-    s0 -> sn 0;
-    sn -> sn 0;
     accepting: s0, sn;
 }    
 
